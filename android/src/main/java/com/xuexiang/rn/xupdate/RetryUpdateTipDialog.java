@@ -15,7 +15,7 @@
  *
  */
 
-package com.xuexiang.flutter_xupdate;
+package com.xuexiang.rn.xupdate;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

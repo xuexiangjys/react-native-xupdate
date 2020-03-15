@@ -15,7 +15,7 @@
  *
  */
 
-package com.xuexiang.flutter_xupdate;
+package com.xuexiang.rn.xupdate;
 
 import android.text.TextUtils;
 
@@ -24,7 +24,6 @@ import androidx.annotation.Nullable;
 
 import com.xuexiang.xupdate._XUpdate;
 import com.xuexiang.xupdate.entity.UpdateEntity;
-import com.xuexiang.xupdate.entity.UpdateError;
 import com.xuexiang.xupdate.proxy.impl.DefaultUpdateDownloader;
 import com.xuexiang.xupdate.service.OnFileDownloadListener;
 

@@ -1,7 +1,7 @@
 
-#import "RNXupdate.h"
+#import "RNXUpdate.h"
 
-@implementation RNXupdate
+@implementation RNXUpdate
 
 - (dispatch_queue_t)methodQueue
 {

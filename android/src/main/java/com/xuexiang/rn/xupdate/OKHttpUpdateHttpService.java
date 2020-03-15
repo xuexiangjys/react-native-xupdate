@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.xuexiang.flutter_xupdate;
+package com.xuexiang.rn.xupdate;
 
 import androidx.annotation.NonNull;
 

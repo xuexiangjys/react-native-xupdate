@@ -1,23 +1,26 @@
-
 buildscript {
-    repositories {
-        jcenter()
-    }
+    if (project == rootProject) {
+        repositories {
+            google()
+            jcenter()
+        }
 
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.3.1'
+        dependencies {
+            //noinspection GradleDependency
+            classpath("com.android.tools.build:gradle:3.5.2")
+        }
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -27,10 +30,23 @@ android {
 }
 
 repositories {
-    mavenCentral()
+    mavenLocal()
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url("$rootDir/../node_modules/react-native/android")
+    }
+    google()
+    jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+'
+    implementation 'com.facebook.react:react-native:+'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'com.github.xuexiangjys:XUpdate:1.1.4'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.zhy:okhttputils:2.6.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
 }
   

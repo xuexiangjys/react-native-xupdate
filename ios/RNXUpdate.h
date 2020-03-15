@@ -5,7 +5,6 @@
 #import <React/RCTBridgeModule.h>
 #endif
 
-@interface RNXupdate : NSObject <RCTBridgeModule>
+@interface RNXUpdate : NSObject <RCTBridgeModule>
 
 @end
-  

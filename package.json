@@ -1,18 +1,27 @@
-
 {
   "name": "react-native-xupdate",
+  "description": "A React-Native plugin for XUpdate(Android Version Update Library).",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "make test"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "xupdate",
+    "native"
   ],
-  "author": "",
-  "license": "",
-  "peerDependencies": {
-    "react-native": "^0.41.2"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/react-native-xupdate.git"
+  },
+  "author": "xuexiangjys <xuexiangjys@163.com> (http://xuexiangjys.club)",
+  "homepage": "https://github.com/react-native-xupdate",
+  "bugs": {
+    "url": "https://github.com/xuexiangjys/react-native-xupdate/issues"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "react-native": "^0.61.5"
   }
 }

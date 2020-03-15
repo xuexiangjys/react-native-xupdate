@@ -3,7 +3,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:RNXupdate.xcodeproj">
+      location = "group:RNXUpdate.xcodeproj">
    </FileRef>
 </Workspace>
-  
