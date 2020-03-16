@@ -1,19 +1,19 @@
 
 # react-native-xupdate
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://www.npmjs.com/package/react-native-xupdate)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://www.npmjs.com/package/react-native-xupdate-new)
 [![Issue](https://img.shields.io/github/issues/xuexiangjys/react-native-xupdate.svg)](https://github.com/xuexiangjys/react-native-xupdate/issues)
-[![Star](https://img.shields.io/github/stars/xuexiangjys/react-native-xupdate.svg)](https://github.com/xuexiangjys/react-native-xupdate)
+[![Star](https://img.shields.io/github/stars/xuexiangjys/react-native-xupdat.svg)](https://github.com/xuexiangjys/react-native-xupdate)
 
 A React-Native plugin for XUpdate(Android Version Update Library).
 
 ## Getting started
 
-`$ npm install react-native-xupdate --save`
+`$ npm install react-native-xupdate-new --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-xupdate`
+`$ react-native link react-native-xupdate-new`
 
 ### Manual installation
 
@@ -21,7 +21,7 @@ A React-Native plugin for XUpdate(Android Version Update Library).
 #### iOS（Temporarily not supported）
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `react-native-xupdate` and add `RNXUpdate.xcodeproj`
+2. Go to `node_modules` ➜ `react-native-xupdate-new` and add `RNXUpdate.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libRNXUpdate.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 4. Run your project (`Cmd+R`)<
 
@@ -32,12 +32,12 @@ A React-Native plugin for XUpdate(Android Version Update Library).
   - Add `new RNXUpdatePackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
-  	include ':react-native-xupdate'
-  	project(':react-native-xupdate').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-xupdate/android')
+  	include ':react-native-xupdate-new'
+  	project(':react-native-xupdate-new').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-xupdate-new/android')
   	```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
   	```
-      compile project(':react-native-xupdate')
+      compile project(':react-native-xupdate-new')
   	```
 
 
@@ -46,7 +46,7 @@ A React-Native plugin for XUpdate(Android Version Update Library).
 ### Initialization
 
 ```
-import {XUpdate} from 'react-native-xupdate';
+import {XUpdate} from 'react-native-xupdate-new';
 
 ///初始化
 initXUpdate() {

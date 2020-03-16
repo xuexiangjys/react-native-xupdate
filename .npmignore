@@ -1,5 +1,7 @@
 /.github
 /example
 /android/build
+/android/.idea
 /website
 /docs
+/.idea

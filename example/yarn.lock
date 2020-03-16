@@ -5428,8 +5428,10 @@ react-is@^16.12.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.13.0.tgz#0f37c3613c34fe6b37cd7f763a0d6293ab15c527"
   integrity sha1-DzfDYTw0/ms3zX92Og1ik6sVxSc=
 
-"react-native-xupdate@file:..":
+react-native-xupdate-new@1.0.0:
   version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-xupdate-new/-/react-native-xupdate-new-1.0.0.tgz#a79294b451d837d409fbf66cfe8b5848e8b25f18"
+  integrity sha512-vEQGEDIN64x5WXZ3+VOVuWlyaP1eANY/WYRkevst3SsRE0OwidrD1vZyll5vu7kNqytIhx7UpkRdKnU02U/GYg==
 
 react-native@0.61.5:
   version "0.61.5"
