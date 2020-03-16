@@ -21,7 +21,16 @@ import {
     Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {XUpdate, InitArgs} from "./xupdate";
+import {XUpdate, InitArgs, UpdateArgs} from "./xupdate";
+
+const _updateUrl =
+    "https://gitee.com/xuexiangjys/XUpdate/raw/master/jsonapi/update_test.json";
+
+const _updateUrl2 =
+    "https://gitee.com/xuexiangjys/XUpdate/raw/master/jsonapi/update_forced.json";
+
+const _updateUrl3 =
+    "https://gitee.com/xuexiangjys/XUpdate/raw/master/jsonapi/update_custom.json";
 
 export default class App extends Component<{}> {
 
@@ -72,7 +81,7 @@ export default class App extends Component<{}> {
 
                         <View style={styles.buttonContainer}>
                             <Button
-                                onPress={checkUpdateDefault}
+                                onPress={this.checkUpdateDefault}
                                 title="默认App更新"
                                 color="#2196F3"
                             />
@@ -80,27 +89,128 @@ export default class App extends Component<{}> {
 
                         <View style={styles.buttonContainer}>
                             <Button
-                                onPress={checkUpdateSupportBackground}
+                                onPress={this.checkUpdateSupportBackground}
                                 title="默认App更新 + 支持后台更新"
                                 color="#2196F3"
                             />
                         </View>
+
+                        <View style={styles.buttonContainer}>
+                            <Button
+                                onPress={this.checkUpdateRatio}
+                                title="调整宽高比"
+                                color="#2196F3"
+                            />
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <Button
+                                onPress={this.checkUpdateForce}
+                                title="强制更新"
+                                color="#2196F3"
+                            />
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <Button
+                                onPress={this.checkUpdateAutoMode}
+                                title="自动模式"
+                                color="#2196F3"
+                            />
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <Button
+                                onPress={this.enableChangeDownLoadType}
+                                title="下载时点击取消允许切换下载方式"
+                                color="#2196F3"
+                            />
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <Button
+                                onPress={this.showRetryDialogTip}
+                                title="显示重试提示弹窗"
+                                color="#2196F3"
+                            />
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <Button
+                                onPress={this.customPromptDialog}
+                                title="自定义更新弹窗样式"
+                                color="#2196F3"
+                            />
+                        </View>
+
+                        <View style={{height: 20}}/>
                     </ScrollView>
                 </SafeAreaView>
             </>
         );
     }
+
+
+    ///默认App更新
+    checkUpdateDefault () {
+        let args = new UpdateArgs(_updateUrl);
+        XUpdate.update(args);
+    }
+
+    ///默认App更新 + 支持后台更新
+    checkUpdateSupportBackground() {
+        let args = new UpdateArgs(_updateUrl);
+        args.supportBackgroundUpdate = true;
+        XUpdate.update(args);
+    }
+
+    ///调整宽高比
+    checkUpdateRatio() {
+        let args = new UpdateArgs(_updateUrl);
+        args.widthRatio = 0.6;
+        XUpdate.update(args);
+    }
+
+    ///强制更新
+    checkUpdateForce() {
+        let args = new UpdateArgs(_updateUrl2);
+        XUpdate.update(args);
+    }
+
+    ///自动模式, 如果需要完全无人干预，自动更新，需要root权限【静默安装需要】
+    checkUpdateAutoMode() {
+        let args = new UpdateArgs(_updateUrl);
+        args.isAutoMode = true;
+        XUpdate.update(args);
+    }
+
+    ///下载时点击取消允许切换下载方式
+    enableChangeDownLoadType() {
+        let args = new UpdateArgs(_updateUrl);
+        args.overrideGlobalRetryStrategy = true;
+        args.enableRetry = true;
+        args.retryContent = "Github下载速度太慢了，是否考虑切换蒲公英下载？";
+        args.retryUrl = "https://www.pgyer.com/flutter_learn";
+        XUpdate.update(args);
+    }
+
+    ///显示重试提示弹窗
+    showRetryDialogTip() {
+        XUpdate.showRetryUpdateTip("Github下载速度太慢了，是否考虑切换蒲公英下载？", "https://www.pgyer.com/flutter_learn");
+    }
+
+    ///自定义更新弹窗样式
+    customPromptDialog() {
+        let args = new UpdateArgs(_updateUrl);
+        args.themeColor = '#FFFFAC5D';
+        args.topImageRes = 'bg_update_top';
+        XUpdate.update(args);
+    }
+
 }
 
-function checkUpdateDefault() {
 
 
-
-}
-
-function checkUpdateSupportBackground() {
-
-}
 
 
 

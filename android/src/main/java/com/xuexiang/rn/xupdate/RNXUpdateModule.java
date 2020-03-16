@@ -110,7 +110,7 @@ public class RNXUpdateModule extends ReactContextBaseJavaModule {
             boolean isAutoMode = map.getBoolean("isAutoMode");
             boolean isCustomParse = map.getBoolean("isCustomParse");
             String themeColor = map.getString("themeColor");
-            String topImageRes = map.getString(]"topImageRes");
+            String topImageRes = map.getString("topImageRes");
             Double widthRatio = map.getDouble("widthRatio");
             Double heightRatio = map.getDouble("heightRatio");
 
@@ -177,5 +177,20 @@ public class RNXUpdateModule extends ReactContextBaseJavaModule {
             builder.updateDownLoader(new RetryUpdateDownloader(enableRetry, retryContent, retryUrl));
         }
     }
+
+
+    /**
+     * 显示重试提示弹窗
+     *
+     * @param map
+     */
+    @ReactMethod
+    public void showRetryUpdateTipDialog(ReadableMap map) {
+        String retryContent = map.getString("retryContent");
+        String retryUrl = map.getString("retryUrl");
+
+        RetryUpdateTipDialog.show(retryContent, retryUrl);
+    }
+
 
 }

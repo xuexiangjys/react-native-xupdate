@@ -2,5 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.xuexiang.rn.xupdate">
 
+
+    <application>
+
+        <!-- 版本更新重试提示弹窗-->
+        <activity
+            android:name=".RetryUpdateTipDialog"
+            android:theme="@style/DialogTheme" />
+
+    </application>
+
+
 </manifest>
   
