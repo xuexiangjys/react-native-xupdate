@@ -1,0 +1,9 @@
+{
+  "hasUpdate": true,
+  "isIgnorable": false,
+  "versionCode": 3,
+  "versionName": "1.0.5",
+  "updateLog": "\r\n1、这是直接传入UpdateEntity进行更新。\r\n2、添加使用demo演示。\r\n3、新增自定义更新服务API接口。",
+  "apkUrl": "https://raw.githubusercontent.com/xuexiangjys/XUpdate/master/apk/xupdate_demo_1.0.2.apk",
+  "apkSize": 2048
+}

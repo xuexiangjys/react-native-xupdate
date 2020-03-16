@@ -21,21 +21,36 @@ import {
     Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {XUpdate, InitArgs, UpdateArgs} from "./xupdate";
+import {XUpdate, InitArgs, UpdateArgs, UpdateEntity} from './xupdate';
+import AppInfo from './update_custom';
 
 const _updateUrl =
-    "https://gitee.com/xuexiangjys/XUpdate/raw/master/jsonapi/update_test.json";
+    'https://gitee.com/xuexiangjys/XUpdate/raw/master/jsonapi/update_test.json';
 
 const _updateUrl2 =
-    "https://gitee.com/xuexiangjys/XUpdate/raw/master/jsonapi/update_forced.json";
+    'https://gitee.com/xuexiangjys/XUpdate/raw/master/jsonapi/update_forced.json';
 
 const _updateUrl3 =
-    "https://gitee.com/xuexiangjys/XUpdate/raw/master/jsonapi/update_custom.json";
+    'https://gitee.com/xuexiangjys/XUpdate/raw/master/jsonapi/update_custom.json';
 
 export default class App extends Component<{}> {
 
     state = {
         _message: '',
+    };
+
+    //自定义的异常处理
+    errorListener = (error) => {
+        console.log(error);
+        //下载失败
+        if (error['code'] === 4000) {
+            XUpdate.showRetryUpdateTip(
+                'Github被墙无法继续下载，是否考虑切换蒲公英下载？',
+                'https://www.pgyer.com/flutter_learn');
+        }
+        this.setState({
+            _message: '发送异常：' + JSON.stringify(error),
+        });
     };
 
     componentDidMount() {
@@ -46,19 +61,24 @@ export default class App extends Component<{}> {
         args.isAutoMode = false;
         args.supportSilentInstall = false;
         args.enableRetry = false;
-
         XUpdate.init(args).then(result => {
             this.setState({
-                _message: '初始化成功:' + JSON.stringify(result)
-            })
+                _message: '初始化成功:' + JSON.stringify(result),
+            });
         }).catch(error => {
             console.log(error);
             this.setState({
-                _message: '初始化失败:' + error
-            })
-        })
+                _message: '初始化失败:' + error,
+            });
+        });
+
+        XUpdate.setCustomParser({parseJson: this.customParser});
+        XUpdate.addErrorListener(this.errorListener);
     }
 
+    componentWillUnmount() {
+        XUpdate.removeErrorListener(this.errorListener);
+    }
 
     render() {
         return (
@@ -137,6 +157,22 @@ export default class App extends Component<{}> {
 
                         <View style={styles.buttonContainer}>
                             <Button
+                                onPress={this.customJsonParse}
+                                title="使用自定义json解析"
+                                color="#2196F3"
+                            />
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <Button
+                                onPress={this.checkUpdateByUpdateEntity}
+                                title="直接传入UpdateEntity进行更新"
+                                color="#2196F3"
+                            />
+                        </View>
+
+                        <View style={styles.buttonContainer}>
+                            <Button
                                 onPress={this.customPromptDialog}
                                 title="自定义更新弹窗样式"
                                 color="#2196F3"
@@ -152,7 +188,7 @@ export default class App extends Component<{}> {
 
 
     ///默认App更新
-    checkUpdateDefault () {
+    checkUpdateDefault() {
         let args = new UpdateArgs(_updateUrl);
         XUpdate.update(args);
     }
@@ -189,15 +225,39 @@ export default class App extends Component<{}> {
         let args = new UpdateArgs(_updateUrl);
         args.overrideGlobalRetryStrategy = true;
         args.enableRetry = true;
-        args.retryContent = "Github下载速度太慢了，是否考虑切换蒲公英下载？";
-        args.retryUrl = "https://www.pgyer.com/flutter_learn";
+        args.retryContent = 'Github下载速度太慢了，是否考虑切换蒲公英下载？';
+        args.retryUrl = 'https://www.pgyer.com/flutter_learn';
         XUpdate.update(args);
     }
 
     ///显示重试提示弹窗
     showRetryDialogTip() {
-        XUpdate.showRetryUpdateTip("Github下载速度太慢了，是否考虑切换蒲公英下载？", "https://www.pgyer.com/flutter_learn");
+        XUpdate.showRetryUpdateTip('Github下载速度太慢了，是否考虑切换蒲公英下载？', 'https://www.pgyer.com/flutter_learn');
     }
+
+    ///使用自定义json解析
+    customJsonParse() {
+        let args = new UpdateArgs(_updateUrl3);
+        args.isCustomParse = true;
+        XUpdate.update(args);
+    }
+
+    ///直接传入UpdateEntity进行更新提示
+    checkUpdateByUpdateEntity() {
+        let args = new UpdateArgs();
+        args.supportBackgroundUpdate = true;
+        XUpdate.updateByInfo(args, {
+            hasUpdate: AppInfo['hasUpdate'],
+            versionCode: AppInfo['versionCode'],
+            versionName: AppInfo['versionName'],
+            updateContent: AppInfo['updateLog'],
+            downloadUrl: AppInfo['apkUrl'],
+            //选填
+            isIgnorable: AppInfo['isIgnorable'],
+            apkSize: AppInfo['apkSize'],
+        });
+    }
+
 
     ///自定义更新弹窗样式
     customPromptDialog() {
@@ -207,14 +267,22 @@ export default class App extends Component<{}> {
         XUpdate.update(args);
     }
 
+    //自定义解析
+    customParser = (json) => {
+        let appInfo = JSON.parse(json);
+        return {
+            //必填
+            hasUpdate: appInfo['hasUpdate'],
+            versionCode: appInfo['versionCode'],
+            versionName: appInfo['versionName'],
+            updateContent: appInfo['updateLog'],
+            downloadUrl: appInfo['apkUrl'],
+            //选填
+            isIgnorable: appInfo['isIgnorable'],
+            apkSize: appInfo['apkSize'],
+        };
+    };
 }
-
-
-
-
-
-
-
 
 
 const styles = StyleSheet.create({

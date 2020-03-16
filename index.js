@@ -1,4 +1,4 @@
-import {NativeModules} from 'react-native';
+import {NativeEventEmitter, NativeModules} from 'react-native';
 
 const {RNXUpdate} = NativeModules;
 
@@ -30,12 +30,13 @@ class InitArgs {
 }
 
 
-
+const KEY_ERROR_EVENT = 'XUpdate_Error_Event';
+const KEY_JSON_EVENT = 'XUpdate_Json_Event';
 
 ///版本更新参数
 class UpdateArgs {
 
-    constructor(url) {
+    constructor(url: string) {
         ///版本检查的地址
         this.url = url;
         ///传递的参数
@@ -66,8 +67,51 @@ class UpdateArgs {
 
 }
 
-const XUpdate = {
+const EventEmitter = new NativeEventEmitter(RNXUpdate);
 
+class UpdateParser {
+    parseJson: (json: string) => UpdateEntity;
+
+    constructor(parser) {
+        this.parseJson = parser;
+    }
+}
+
+///版本更新信息
+class UpdateEntity {
+    ///是否有新版本
+    hasUpdate: boolean;
+    ///是否强制安装：不安装无法使用app
+    isForce: boolean;
+    ///是否可忽略该版本
+    isIgnorable: boolean;
+
+    //===========升级的信息=============//
+    ///版本号
+    versionCode: number;
+    ///版本名称
+    versionName: string;
+    ///更新内容
+    updateContent: string;
+    ///下载地址
+    downloadUrl: string;
+    ///apk的大小
+    apkSize: number;
+    ///apk文件的加密值（这里默认是md5值）
+    apkMd5: string;
+
+    //这5个值必须传
+    constructor(hasUpdate, versionCode, versionName, updateContent, downloadUrl) {
+        this.hasUpdate = hasUpdate;
+        this.versionCode = versionCode;
+        this.versionName = versionName;
+        this.updateContent = updateContent;
+        this.downloadUrl = downloadUrl;
+    }
+}
+
+
+const XUpdate = {
     ///初始化
     init: (initArg = new InitArgs()) => {
 
@@ -89,6 +133,22 @@ const XUpdate = {
         });
     },
 
+    setCustomParser: (parser: UpdateParser) => {
+        EventEmitter.addListener(KEY_JSON_EVENT, (json) => {
+            if (parser !== null) {
+                RNXUpdate.onCustomUpdateParse(parser.parseJson(json));
+            }
+        });
+    },
+
+    addErrorListener: (listener: Function) => {
+        EventEmitter.addListener(KEY_ERROR_EVENT, listener);
+    },
+
+    removeErrorListener: (listener: Function) => {
+        EventEmitter.removeListener(KEY_ERROR_EVENT, listener);
+    },
+
     ///版本更新
     update: (updateArgs = new UpdateArgs()) => {
 
@@ -97,41 +157,66 @@ const XUpdate = {
         }
 
         if (updateArgs.url === null || updateArgs.url === undefined || updateArgs.url === '') {
-            return 'url can not be null or empty！'
+            return 'url can not be null or empty！';
         }
 
         return RNXUpdate.checkUpdate({
-            "url": updateArgs.url,
-            "params": updateArgs.params,
-            "supportBackgroundUpdate": updateArgs.supportBackgroundUpdate,
-            "isAutoMode": updateArgs.isAutoMode,
-            "isCustomParse": updateArgs.isCustomParse,
-            "themeColor": updateArgs.themeColor,
-            "topImageRes": updateArgs.topImageRes,
-            "widthRatio": updateArgs.widthRatio,
-            "heightRatio": updateArgs.heightRatio,
-            "overrideGlobalRetryStrategy": updateArgs.overrideGlobalRetryStrategy,
-            "enableRetry": updateArgs.enableRetry,
-            "retryContent": updateArgs.retryContent,
-            "retryUrl": updateArgs.retryUrl
+            'url': updateArgs.url,
+            'params': updateArgs.params,
+            'supportBackgroundUpdate': updateArgs.supportBackgroundUpdate,
+            'isAutoMode': updateArgs.isAutoMode,
+            'isCustomParse': updateArgs.isCustomParse,
+            'themeColor': updateArgs.themeColor,
+            'topImageRes': updateArgs.topImageRes,
+            'widthRatio': updateArgs.widthRatio,
+            'heightRatio': updateArgs.heightRatio,
+            'overrideGlobalRetryStrategy': updateArgs.overrideGlobalRetryStrategy,
+            'enableRetry': updateArgs.enableRetry,
+            'retryContent': updateArgs.retryContent,
+            'retryUrl': updateArgs.retryUrl,
         });
     },
 
-    showRetryUpdateTip : (retryContent, retryUrl) => {
+    ///直接传入UpdateEntity进行版本更新
+    updateByInfo: (updateArgs = new UpdateArgs(), updateEntity: UpdateEntity) => {
+
+        if (Platform.OS === 'ios') {
+            return 'IOS端暂不支持';
+        }
+
+        return RNXUpdate.updateByUpdateEntity({
+            'updateEntity': updateEntity,
+            'supportBackgroundUpdate': updateArgs.supportBackgroundUpdate,
+            'isAutoMode': updateArgs.isAutoMode,
+            'themeColor': updateArgs.themeColor,
+            'topImageRes': updateArgs.topImageRes,
+            'widthRatio': updateArgs.widthRatio,
+            'heightRatio': updateArgs.heightRatio,
+            'overrideGlobalRetryStrategy': updateArgs.overrideGlobalRetryStrategy,
+            'enableRetry': updateArgs.enableRetry,
+            'retryContent': updateArgs.retryContent,
+            'retryUrl': updateArgs.retryUrl,
+        });
+    },
+
+    showRetryUpdateTip: (retryContent, retryUrl) => {
 
         if (Platform.OS === 'ios') {
             return;
         }
 
         RNXUpdate.showRetryUpdateTipDialog({
-            "retryContent": retryContent,
-            "retryUrl": retryUrl
-        })
-    }
+            'retryContent': retryContent,
+            'retryUrl': retryUrl,
+        });
+    },
 };
+
 
 export {
     InitArgs,
     UpdateArgs,
+    UpdateEntity,
+    UpdateParser,
     XUpdate,
 };
