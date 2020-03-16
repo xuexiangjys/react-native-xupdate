@@ -54,6 +54,10 @@ export default class App extends Component<{}> {
     };
 
     componentDidMount() {
+        this.initXUpdate()
+    }
+
+    initXUpdate() {
         let args = new InitArgs();
         args.debug = true;
         args.isPostJson = false;
@@ -72,7 +76,9 @@ export default class App extends Component<{}> {
             });
         });
 
+        //设置自定义解析
         XUpdate.setCustomParser({parseJson: this.customParser});
+        //设置错误监听
         XUpdate.addErrorListener(this.errorListener);
     }
 
