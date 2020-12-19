@@ -60,6 +60,7 @@ public class RNXUpdateModule extends ReactContextBaseJavaModule {
             boolean debug = map.getBoolean("debug");
             boolean isGet = map.getBoolean("isGet");
             boolean isPostJson = map.getBoolean("isPostJson");
+            int timeout = map.getInt("timeout");
             boolean isWifiOnly = map.getBoolean("isWifiOnly");
             boolean isAutoMode = map.getBoolean("isAutoMode");
             boolean supportSilentInstall = map.getBoolean("supportSilentInstall");
@@ -88,7 +89,7 @@ public class RNXUpdateModule extends ReactContextBaseJavaModule {
                     .param("appKey", mApplication.getPackageName())
                     .setIUpdateDownLoader(new RetryUpdateDownloader(enableRetry, retryContent, retryUrl))
                     //这个必须设置！实现网络请求功能。
-                    .setIUpdateHttpService(new OKHttpUpdateHttpService(isPostJson));
+                    .setIUpdateHttpService(new OKHttpUpdateHttpService(timeout, isPostJson));
 
             ReadableMap params = map.getMap("params");
             if (params != null) {
@@ -124,6 +125,7 @@ public class RNXUpdateModule extends ReactContextBaseJavaModule {
             boolean isCustomParse = map.getBoolean("isCustomParse");
             String themeColor = map.getString("themeColor");
             String topImageRes = map.getString("topImageRes");
+            String buttonTextColor = map.getString("buttonTextColor");
             double widthRatio = map.getDouble("widthRatio");
             double heightRatio = map.getDouble("heightRatio");
 
@@ -149,7 +151,7 @@ public class RNXUpdateModule extends ReactContextBaseJavaModule {
                 builder.updateParser(mCustomParser);
             }
 
-            updatePromptStyle(builder, themeColor, topImageRes, widthRatio, heightRatio, overrideGlobalRetryStrategy, enableRetry, retryContent, retryUrl);
+            updatePromptStyle(builder, themeColor, topImageRes, buttonTextColor, widthRatio, heightRatio, overrideGlobalRetryStrategy, enableRetry, retryContent, retryUrl);
 
             builder.update();
 
@@ -180,6 +182,7 @@ public class RNXUpdateModule extends ReactContextBaseJavaModule {
             boolean isAutoMode = map.getBoolean("isAutoMode");
             String themeColor = map.getString("themeColor");
             String topImageRes = map.getString("topImageRes");
+            String buttonTextColor = map.getString("buttonTextColor");
             double widthRatio = map.getDouble("widthRatio");
             double heightRatio = map.getDouble("heightRatio");
 
@@ -193,7 +196,7 @@ public class RNXUpdateModule extends ReactContextBaseJavaModule {
                     .isAutoMode(isAutoMode)
                     .supportBackgroundUpdate(supportBackgroundUpdate);
 
-            updatePromptStyle(builder, themeColor, topImageRes, widthRatio, heightRatio, overrideGlobalRetryStrategy, enableRetry, retryContent, retryUrl);
+            updatePromptStyle(builder, themeColor, topImageRes, buttonTextColor, widthRatio, heightRatio, overrideGlobalRetryStrategy, enableRetry, retryContent, retryUrl);
 
             builder.build().update(updateEntity);
 
@@ -223,6 +226,7 @@ public class RNXUpdateModule extends ReactContextBaseJavaModule {
      * @param builder
      * @param themeColor                  主题颜色
      * @param topImageRes                 弹窗顶部的图片
+     * @param buttonTextColor             按钮文字的颜色
      * @param widthRatio                  版本更新提示器宽度占屏幕的比例
      * @param heightRatio                 版本更新提示器高度占屏幕的比例
      * @param overrideGlobalRetryStrategy
@@ -230,13 +234,16 @@ public class RNXUpdateModule extends ReactContextBaseJavaModule {
      * @param retryContent
      * @param retryUrl
      */
-    private void updatePromptStyle(UpdateManager.Builder builder, String themeColor, String topImageRes, double widthRatio, double heightRatio, boolean overrideGlobalRetryStrategy, boolean enableRetry, String retryContent, String retryUrl) {
+    private void updatePromptStyle(UpdateManager.Builder builder, String themeColor, String topImageRes, String buttonTextColor, double widthRatio, double heightRatio, boolean overrideGlobalRetryStrategy, boolean enableRetry, String retryContent, String retryUrl) {
         if (!TextUtils.isEmpty(themeColor)) {
             builder.promptThemeColor(Color.parseColor(themeColor));
         }
         if (!TextUtils.isEmpty(topImageRes)) {
             int topImageResId = mApplication.getCurrentActivity().getResources().getIdentifier(topImageRes, "drawable", mApplication.getCurrentActivity().getPackageName());
             builder.promptTopResId(topImageResId);
+        }
+        if (!TextUtils.isEmpty(buttonTextColor)) {
+            builder.promptButtonTextColor(Color.parseColor(buttonTextColor));
         }
         builder.promptWidthRatio((float) widthRatio);
         builder.promptHeightRatio((float) heightRatio);

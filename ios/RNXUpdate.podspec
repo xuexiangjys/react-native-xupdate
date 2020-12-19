@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "RNXUpdate"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "RNXUpdate"
   s.description  = <<-DESC
                   RNXUpdate
@@ -21,4 +21,3 @@ Pod::Spec.new do |s|
 
 end
 
-  

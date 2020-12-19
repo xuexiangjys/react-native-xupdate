@@ -3,7 +3,7 @@
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://www.npmjs.com/package/react-native-xupdate-new)
 [![Issue](https://img.shields.io/github/issues/xuexiangjys/react-native-xupdate.svg)](https://github.com/xuexiangjys/react-native-xupdate/issues)
-[![Star](https://img.shields.io/github/stars/xuexiangjys/react-native-xupdat.svg)](https://github.com/xuexiangjys/react-native-xupdate)
+[![Star](https://img.shields.io/github/stars/xuexiangjys/react-native-xupdate.svg)](https://github.com/xuexiangjys/react-native-xupdate)
 
 A React-Native plugin for XUpdate(Android Version Update Library).
 
@@ -229,3 +229,40 @@ customPromptDialog() {
     XUpdate.update(args);
 }
 ```
+
+## Property value
+
+### Initialization
+
+Name | Type | Default | Description
+:-|:-:|:-:|:-
+debug | bool | false | Whether Output log
+isPost | bool | false | Whether use post request
+isPostJson | bool | false | Whether post request upload json format
+timeout | int | 20000(ms) | Request response timeout
+isWifiOnly | bool | true | Whether update only under WiFi
+isAutoMode | bool | false | Whether to turn on automatic mode
+supportSilentInstall | bool | false | Whether to support silent installation requires that the device has root permission
+enableRetry | bool | false | In the process of downloading, if you click Cancel, whether the pop-up window for retrying to switch the download mode will pop up
+retryContent | String | '' | Try the prompt content of the prompt pop-up window again
+retryUrl | String | '' | Retrying prompt pop-up URL to jump after clicking
+params | Map | / | Public parameters to be set
+
+### CheckUpdate
+
+Name | Type | Default | Description
+:-|:-:|:-:|:-
+url | String | / | URL of version check
+params | Map | / | Parameters
+supportBackgroundUpdate | bool | false | Whether to support background updates
+isAutoMode | bool | false | Whether to turn on automatic mode
+isCustomParse | bool | false | Is it a custom resolution protocol
+themeColor | String | '' | Apply pop-up theme color
+topImageRes | String | '' | The name of the top picture resource in the pop-up window
+buttonTextColor | String | '' | The color of the button text
+widthRatio | double | / | Proportion of version update Prompter width to screen
+heightRatio | double | / | Proportion of version update Prompter height to screen
+overrideGlobalRetryStrategy | bool | false | Whether to override the global retry policy
+enableRetry | bool | false | In the process of downloading, if you click Cancel, whether the pop-up window for retrying to switch the download mode will pop up
+retryContent | String | '' | Try the prompt content of the prompt pop-up window again
+retryUrl | String | '' | Retrying prompt pop-up URL to jump after clicking

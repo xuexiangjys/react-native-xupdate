@@ -4,7 +4,6 @@ const {RNXUpdate} = NativeModules;
 
 ///XUpdate初始化参数
 class InitArgs {
-
     constructor() {
         ///是否输出日志
         this.debug = false;
@@ -12,6 +11,8 @@ class InitArgs {
         this.isPost = false;
         ///post请求是否是上传json
         this.isPostJson = false;
+        ///请求响应超时时间
+        this.timeout = 20000;
         ///是否只在wifi下才能进行更新
         this.isWifiOnly = true;
         ///是否开启自动模式
@@ -29,13 +30,11 @@ class InitArgs {
     }
 }
 
-
 const KEY_ERROR_EVENT = 'XUpdate_Error_Event';
 const KEY_JSON_EVENT = 'XUpdate_Json_Event';
 
 ///版本更新参数
 class UpdateArgs {
-
     constructor(url: string) {
         ///版本检查的地址
         this.url = url;
@@ -51,6 +50,8 @@ class UpdateArgs {
         this.themeColor = '';
         ///应用弹窗的顶部图片资源名
         this.topImageRes = '';
+        ///按钮文字的颜色
+        this.buttonTextColor = '';
         ///版本更新提示器宽度占屏幕的比例, 不设置的话不做约束
         this.widthRatio = -1;
         ///版本更新提示器高度占屏幕的比例, 不设置的话不做约束
@@ -64,7 +65,6 @@ class UpdateArgs {
         ///重试提示弹窗点击后跳转的url
         this.retryUrl = '';
     }
-
 }
 
 const EventEmitter = new NativeEventEmitter(RNXUpdate);
@@ -110,26 +110,25 @@ class UpdateEntity {
     }
 }
 
-
 const XUpdate = {
     ///初始化
     init: (initArg = new InitArgs()) => {
-
         if (Platform.OS === 'ios') {
             return 'IOS端暂不支持';
         }
 
         return RNXUpdate.initXUpdate({
-            'debug': initArg.debug,
-            'isGet': !initArg.isPost,
-            'isPostJson': initArg.isPostJson,
-            'isWifiOnly': initArg.isWifiOnly,
-            'isAutoMode': initArg.isAutoMode,
-            'supportSilentInstall': initArg.supportSilentInstall,
-            'enableRetry': initArg.enableRetry,
-            'retryContent': initArg.retryContent,
-            'retryUrl': initArg.retryUrl,
-            'params': initArg.params,
+            debug: initArg.debug,
+            isGet: !initArg.isPost,
+            isPostJson: initArg.isPostJson,
+            timeout: initArg.timeout,
+            isWifiOnly: initArg.isWifiOnly,
+            isAutoMode: initArg.isAutoMode,
+            supportSilentInstall: initArg.supportSilentInstall,
+            enableRetry: initArg.enableRetry,
+            retryContent: initArg.retryContent,
+            retryUrl: initArg.retryUrl,
+            params: initArg.params,
         });
     },
 
@@ -151,72 +150,68 @@ const XUpdate = {
 
     ///版本更新
     update: (updateArgs = new UpdateArgs()) => {
-
         if (Platform.OS === 'ios') {
             return 'IOS端暂不支持';
         }
 
-        if (updateArgs.url === null || updateArgs.url === undefined || updateArgs.url === '') {
+        if (
+            updateArgs.url === null ||
+            updateArgs.url === undefined ||
+            updateArgs.url === ''
+        ) {
             return 'url can not be null or empty！';
         }
 
         return RNXUpdate.checkUpdate({
-            'url': updateArgs.url,
-            'params': updateArgs.params,
-            'supportBackgroundUpdate': updateArgs.supportBackgroundUpdate,
-            'isAutoMode': updateArgs.isAutoMode,
-            'isCustomParse': updateArgs.isCustomParse,
-            'themeColor': updateArgs.themeColor,
-            'topImageRes': updateArgs.topImageRes,
-            'widthRatio': updateArgs.widthRatio,
-            'heightRatio': updateArgs.heightRatio,
-            'overrideGlobalRetryStrategy': updateArgs.overrideGlobalRetryStrategy,
-            'enableRetry': updateArgs.enableRetry,
-            'retryContent': updateArgs.retryContent,
-            'retryUrl': updateArgs.retryUrl,
+            url: updateArgs.url,
+            params: updateArgs.params,
+            supportBackgroundUpdate: updateArgs.supportBackgroundUpdate,
+            isAutoMode: updateArgs.isAutoMode,
+            isCustomParse: updateArgs.isCustomParse,
+            themeColor: updateArgs.themeColor,
+            topImageRes: updateArgs.topImageRes,
+            buttonTextColor: updateArgs.buttonTextColor,
+            widthRatio: updateArgs.widthRatio,
+            heightRatio: updateArgs.heightRatio,
+            overrideGlobalRetryStrategy: updateArgs.overrideGlobalRetryStrategy,
+            enableRetry: updateArgs.enableRetry,
+            retryContent: updateArgs.retryContent,
+            retryUrl: updateArgs.retryUrl,
         });
     },
 
     ///直接传入UpdateEntity进行版本更新
     updateByInfo: (updateArgs = new UpdateArgs(), updateEntity: UpdateEntity) => {
-
         if (Platform.OS === 'ios') {
             return 'IOS端暂不支持';
         }
 
         return RNXUpdate.updateByUpdateEntity({
-            'updateEntity': updateEntity,
-            'supportBackgroundUpdate': updateArgs.supportBackgroundUpdate,
-            'isAutoMode': updateArgs.isAutoMode,
-            'themeColor': updateArgs.themeColor,
-            'topImageRes': updateArgs.topImageRes,
-            'widthRatio': updateArgs.widthRatio,
-            'heightRatio': updateArgs.heightRatio,
-            'overrideGlobalRetryStrategy': updateArgs.overrideGlobalRetryStrategy,
-            'enableRetry': updateArgs.enableRetry,
-            'retryContent': updateArgs.retryContent,
-            'retryUrl': updateArgs.retryUrl,
+            updateEntity: updateEntity,
+            supportBackgroundUpdate: updateArgs.supportBackgroundUpdate,
+            isAutoMode: updateArgs.isAutoMode,
+            themeColor: updateArgs.themeColor,
+            topImageRes: updateArgs.topImageRes,
+            buttonTextColor: updateArgs.buttonTextColor,
+            widthRatio: updateArgs.widthRatio,
+            heightRatio: updateArgs.heightRatio,
+            overrideGlobalRetryStrategy: updateArgs.overrideGlobalRetryStrategy,
+            enableRetry: updateArgs.enableRetry,
+            retryContent: updateArgs.retryContent,
+            retryUrl: updateArgs.retryUrl,
         });
     },
 
     showRetryUpdateTip: (retryContent, retryUrl) => {
-
         if (Platform.OS === 'ios') {
             return;
         }
 
         RNXUpdate.showRetryUpdateTipDialog({
-            'retryContent': retryContent,
-            'retryUrl': retryUrl,
+            retryContent: retryContent,
+            retryUrl: retryUrl,
         });
     },
 };
 
-
-export {
-    InitArgs,
-    UpdateArgs,
-    UpdateEntity,
-    UpdateParser,
-    XUpdate,
-};
+export {InitArgs, UpdateArgs, UpdateEntity, UpdateParser, XUpdate};

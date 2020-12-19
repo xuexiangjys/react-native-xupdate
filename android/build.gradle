@@ -21,8 +21,6 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
     }
     lintOptions {
         abortOnError false
@@ -42,11 +40,10 @@ repositories {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
-    implementation 'com.github.xuexiangjys:XUpdate:1.1.4'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.github.xuexiangjys:XUpdate:2.0.5'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.zhy:okhttputils:2.6.2'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
 }
   
