@@ -24,7 +24,7 @@ import {
   InitArgs,
   UpdateArgs,
   UpdateEntity,
-} from './xupdate';
+} from 'react-native-xupdate-new';
 import AppInfo from './update_custom';
 
 const _updateUrl =
