@@ -1,7 +1,7 @@
 
 # react-native-xupdate
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://www.npmjs.com/package/react-native-xupdate-new)
+[![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)](https://www.npmjs.com/package/react-native-xupdate-new)
 [![Issue](https://img.shields.io/github/issues/xuexiangjys/react-native-xupdate.svg)](https://github.com/xuexiangjys/react-native-xupdate/issues)
 [![Star](https://img.shields.io/github/stars/xuexiangjys/react-native-xupdate.svg)](https://github.com/xuexiangjys/react-native-xupdate)
 
