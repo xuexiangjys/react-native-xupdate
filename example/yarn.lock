@@ -5989,10 +5989,10 @@ react-is@^17.0.1:
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-17.0.1.tgz?cache=0&sync_timestamp=1608327781676&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-is%2Fdownload%2Freact-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha1-WzUxvXamRaTJ+25pPtNkGeMwEzk=
 
-react-native-xupdate-new@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/react-native-xupdate-new/download/react-native-xupdate-new-1.0.0.tgz#a79294b451d837d409fbf66cfe8b5848e8b25f18"
-  integrity sha1-p5KUtFHYN9QJ+/Zs/otYSOiyXxg=
+react-native-xupdate-new@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-xupdate-new/-/react-native-xupdate-new-1.0.2.tgz#8c8ed75035088116d7ebbf97144c5319bfa90248"
+  integrity sha512-um1HSn2511MaWGf8pvIjdMbLyxLiijti7OVQXjWNzAQevFnfhfCS8J6m/d4p3+21vTYUG+JMPxyHbydbILu3IQ==
 
 react-native@0.63.4:
   version "0.63.4"

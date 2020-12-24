@@ -19,7 +19,7 @@ import {
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-import {XUpdate, InitArgs, UpdateArgs, UpdateEntity} from './xupdate';
+import {XUpdate, InitArgs, UpdateArgs} from 'react-native-xupdate-new';
 import AppInfo from './update_custom';
 
 const _updateUrl =
